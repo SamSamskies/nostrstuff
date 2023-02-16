@@ -16,7 +16,11 @@ export default async function handler(
         });
         const contentType = response.headers.get("Content-Type");
 
-        if (contentType && contentType.includes("application/json")) {
+        if (
+          contentType &&
+          (contentType.includes("application/json") ||
+            contentType.includes("application/nostr+json"))
+        ) {
           res
             .status(response.status)
             .end(
