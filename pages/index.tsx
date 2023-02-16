@@ -27,7 +27,15 @@ export default function Home() {
       <div>
         <p>
           <strong>ri &lt;RELAY_DOMAIN&gt;</strong> - Retrieves info about a
-          nostr relay if the relay supports nip-11.
+          nostr relay if the relay supports{" "}
+          <a
+            href="https://github.com/nostr-protocol/nips/blob/master/11.md"
+            target="_blank"
+            rel="noreferrer"
+          >
+            nip-11
+          </a>
+          .
         </p>
         <p>
           <strong>clear</strong> - clears the console.
