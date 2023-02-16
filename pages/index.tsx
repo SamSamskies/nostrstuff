@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { ReactTerminal } from "react-terminal";
 import { useState, useEffect, type ReactNode } from "react";
+import { useEnableClearTerminalKeyboardShortcuts } from "@/hooks";
 
 async function queryProfile(fullname: string): Promise<{
   pubkey: string; // hex
@@ -133,6 +134,8 @@ export default function Home() {
     setHasHydrated(true);
   }, []);
 
+  const willDisableInput = useEnableClearTerminalKeyboardShortcuts();
+
   return (
     <>
       <Head>
@@ -166,7 +169,7 @@ export default function Home() {
           <ReactTerminal
             welcomeMessage={welcomeMessage}
             commands={commands}
-            enableInput
+            enableInput={!willDisableInput}
           />
         )}
       </main>
