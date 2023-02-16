@@ -1,35 +1,7 @@
 import Head from "next/head";
 import { ReactTerminal } from "react-terminal";
 import { useState, useEffect, type ReactNode } from "react";
-
-async function queryProfile(fullname: string): Promise<{
-  pubkey: string; // hex
-  relays?: string[];
-} | null> {
-  let [name, domain] = fullname.split("@");
-
-  if (!domain) {
-    // if there is no @, it is because it is just a domain, so assume the name is "_"
-    domain = name;
-    name = "_";
-  }
-
-  if (!name.match(/^[A-Za-z0-9-_]+$/)) return null;
-
-  let res = await (
-    await fetch(`https://${domain}/.well-known/nostr.json?name=${name}`)
-  ).json();
-
-  if (!res?.names?.[name]) return null;
-
-  let pubkey = res.names[name] as string;
-  let relays = (res.relays?.[pubkey] || []) as string[]; // nip35
-
-  return {
-    pubkey,
-    relays,
-  };
-}
+import { queryNip05 } from "@/utils";
 
 const ExampleCommand = ({ children }: { children: ReactNode }) => {
   return (
@@ -96,7 +68,7 @@ export default function Home() {
 
     whois: async (nip05: string) => {
       try {
-        const result = await queryProfile(nip05);
+        const result = await queryNip05(nip05);
         const pubkey = result?.pubkey;
         const relays = result?.relays;
 
