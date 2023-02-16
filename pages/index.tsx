@@ -56,7 +56,7 @@ export default function Home() {
       <div>
         Example commands:
         <ExampleCommand>ri eden.nostr.land</ExampleCommand>
-        <ExampleCommand>whois samsamskies@nostrplebs.com</ExampleCommand>
+        <ExampleCommand>whois samsamskies@nostrstuff.com</ExampleCommand>
       </div>
     </div>
   );
@@ -98,6 +98,7 @@ export default function Home() {
       try {
         const result = await queryProfile(nip05);
         const pubkey = result?.pubkey;
+        const relays = result?.relays;
 
         if (!pubkey) {
           throw new Error("User not found");
@@ -106,12 +107,17 @@ export default function Home() {
         const snortProfileUrl = `https://snort.social/p/${pubkey}`;
 
         return (
-          <p>
-            View profile on Snort{" "}
-            <a href={snortProfileUrl} target="_blank" rel="noreferrer">
-              {snortProfileUrl}
-            </a>
-          </p>
+          <div>
+            <p>
+              View profile on Snort{" "}
+              <a href={snortProfileUrl} target="_blank" rel="noreferrer">
+                {snortProfileUrl}
+              </a>
+            </p>
+            {Number(relays?.length) > 0 && (
+              <p>Preferred relays: {relays?.join(", ")}</p>
+            )}
+          </div>
         );
       } catch (error) {
         return "User not found";
