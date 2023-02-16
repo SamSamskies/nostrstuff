@@ -167,6 +167,7 @@ export default function Home() {
             welcomeMessage={welcomeMessage}
             commands={commands}
             enableInput
+            defaultHandler={() => `Invalid command.`}
           />
         )}
       </main>
