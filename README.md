@@ -1,4 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Nostr Stuff
+
+Web app that can do things such as query info about nostr relays and find people using their nip05.
+
+![Screenshot 2023-02-16 at 11 00 41 AM](https://user-images.githubusercontent.com/3655410/219435668-8bb93b80-52d7-4052-94cb-4b59f7b7cff5.png)
+
+
+![Screenshot 2023-02-16 at 11 01 05 AM](https://user-images.githubusercontent.com/3655410/219435693-5e02cbd8-4206-450a-ba0a-2f6a334ecffd.png)
+
+
 
 ## Getting Started
 
@@ -16,11 +25,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Learn More
 
