@@ -1,25 +1,35 @@
 import Head from "next/head";
 import { ReactTerminal } from "react-terminal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
+import { nip05 } from "nostr-tools";
+
+const ExampleCommand = ({ children }: { children: ReactNode }) => {
+  return (
+    <p style={{ margin: "4px 0" }}>
+      <code
+        style={{
+          background: "#50a",
+          color: "#f5f",
+          padding: "0 8px",
+        }}
+      >
+        {children}
+      </code>
+    </p>
+  );
+};
 
 export default function Home() {
   const [hasHydrated, setHasHydrated] = useState(false);
   const welcomeMessage = (
-    <div>
+    <div style={{ marginBottom: 16 }}>
       <p>Welcome to Nostr Stuff 🤙</p>
       <p>Type &quot;help&quot; for all available commands.</p>
-      <p>
-        Example command:
-        <br />
-        <code
-          style={{
-            background: "#50a",
-            color: "#f5f",
-          }}
-        >
-          ri eden.nostr.land
-        </code>
-      </p>
+      <div>
+        Example commands:
+        <ExampleCommand>ri eden.nostr.land</ExampleCommand>
+        <ExampleCommand>whois samsamskies@nostrplebs.com</ExampleCommand>
+      </div>
     </div>
   );
   const commands = {
@@ -38,6 +48,10 @@ export default function Home() {
           .
         </p>
         <p>
+          <strong>whois &lt;NIP-05&gt;</strong> - Retrieves link to user&apos;s
+          profile on Snort.
+        </p>
+        <p>
           <strong>wtf</strong> - Type this if you are confused af.
         </p>
         <p>
@@ -50,6 +64,30 @@ export default function Home() {
       const response = await fetch(`/api/relay-info?domain=${domain}`);
 
       return <pre>{await response.text()}</pre>;
+    },
+
+    whois: async (userNip05: string) => {
+      try {
+        const result = await nip05.queryProfile(userNip05);
+        const pubkey = result?.pubkey;
+
+        if (!pubkey) {
+          throw new Error("User not found");
+        }
+
+        const snortProfileUrl = `https://snort.social/p/${pubkey}`;
+
+        return (
+          <p>
+            View profile on Snort{" "}
+            <a href={snortProfileUrl} target="_blank" rel="noreferrer">
+              {snortProfileUrl}
+            </a>
+          </p>
+        );
+      } catch (error) {
+        return "User not found";
+      }
     },
 
     wtf: () => {
