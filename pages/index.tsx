@@ -38,7 +38,10 @@ export default function Home() {
           .
         </p>
         <p>
-          <strong>clear</strong> - clears the console.
+          <strong>wtf</strong> - Type this if you are confused af.
+        </p>
+        <p>
+          <strong>clear</strong> - Clears the console.
         </p>
       </div>
     ),
@@ -47,6 +50,16 @@ export default function Home() {
       const response = await fetch(`/api/relay-info?domain=${domain}`);
 
       return <pre>{await response.text()}</pre>;
+    },
+
+    wtf: () => {
+      return (
+        <p>
+          <a href="https://nostr.how/" target="_blank" rel="noreferrer">
+            Click here to go to nostr.how to learn more about nostr.
+          </a>
+        </p>
+      );
     },
   };
 
