@@ -21,13 +21,11 @@ export default async function handler(
           (contentType.includes("application/json") ||
             contentType.includes("application/nostr+json"))
         ) {
-          res
-            .status(response.status)
-            .end(
-              response.ok
-                ? JSON.stringify(await response.json(), null, 2)
-                : `Error: ${response.statusText}`
-            );
+          if (response.ok) {
+            res.status(response.status).json(await response.json());
+          } else {
+            res.status(response.status).end(`Error: ${response.statusText}`);
+          }
         } else {
           res.status(response.status).end(`nip-11 not supported for ${uri}`);
         }

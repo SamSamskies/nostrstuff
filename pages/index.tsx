@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { ReactTerminal } from "react-terminal";
 import { useState, useEffect, type ReactNode } from "react";
-import { queryNip05 } from "@/utils";
+import { queryNip05, getSnortUrl, isValidUrl } from "@/utils";
 
 const ExampleCommand = ({ children }: { children: ReactNode }) => {
   return (
@@ -62,8 +62,46 @@ export default function Home() {
 
     ri: async (domain: string) => {
       const response = await fetch(`/api/relay-info?domain=${domain}`);
+      const contentType = response.headers.get("Content-Type");
 
-      return <pre>{await response.text()}</pre>;
+      if (contentType && contentType.includes("application/json")) {
+        const relayInfo = await response.json();
+        const snortProfileUrl = getSnortUrl(relayInfo.pubkey);
+        const softwareUrl = relayInfo.software
+          ? relayInfo.software.replace(/^.*?(http)/, "$1")
+          : null;
+        const paymentsUrl = relayInfo.payments_url;
+
+        return (
+          <div>
+            <pre>{JSON.stringify(relayInfo, null, 2)}</pre>
+            <p>
+              View relay maintainer&apos;s profile on Snort{" "}
+              <a href={snortProfileUrl} target="_blank" rel="noreferrer">
+                {snortProfileUrl}
+              </a>
+            </p>
+            {isValidUrl(softwareUrl) && (
+              <p>
+                Check out the code{" "}
+                <a href={softwareUrl} target="_blank" rel="noreferrer">
+                  {softwareUrl}
+                </a>
+              </p>
+            )}
+            {isValidUrl(paymentsUrl) && (
+              <p>
+                Make a payment for the relay{" "}
+                <a href={paymentsUrl} target="_blank" rel="noreferrer">
+                  {paymentsUrl}
+                </a>
+              </p>
+            )}
+          </div>
+        );
+      } else {
+        return await response.text();
+      }
     },
 
     whois: async (nip05: string) => {
@@ -76,7 +114,7 @@ export default function Home() {
           throw new Error("User not found");
         }
 
-        const snortProfileUrl = `https://snort.social/p/${pubkey}`;
+        const snortProfileUrl = getSnortUrl(pubkey);
 
         return (
           <div>
