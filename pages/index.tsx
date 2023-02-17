@@ -48,8 +48,8 @@ export default function Home() {
           .
         </p>
         <p>
-          <strong>whois &lt;NIP-05&gt;</strong> - Retrieves link to user&apos;s
-          profile on Snort and their preferred relays.
+          <strong>whois &lt;NIP05_ADDRESS&gt;</strong> - Retrieves link to
+          user&apos;s profile on Snort and their preferred relays.
         </p>
         <p>
           <strong>wtf</strong> - Type this if you are confused af.
