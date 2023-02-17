@@ -1,37 +1,11 @@
 import Head from "next/head";
 import { ReactTerminal } from "react-terminal";
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { queryNip05, getSnortUrl, isValidUrl } from "@/utils";
-
-const ExampleCommand = ({ children }: { children: ReactNode }) => {
-  return (
-    <p style={{ margin: "4px 0" }}>
-      <code
-        style={{
-          background: "#50a",
-          color: "#f5f",
-          padding: "0 8px",
-        }}
-      >
-        {children}
-      </code>
-    </p>
-  );
-};
+import { WelcomeMessage } from "@/components";
 
 export default function Home() {
   const [hasHydrated, setHasHydrated] = useState(false);
-  const welcomeMessage = (
-    <div style={{ marginBottom: 16 }}>
-      <p>Welcome to Nostr Stuff 🤙</p>
-      <p>Type &quot;help&quot; for all available commands.</p>
-      <div>
-        Example commands:
-        <ExampleCommand>ri eden.nostr.land</ExampleCommand>
-        <ExampleCommand>whois samsamskies@nostrstuff.com</ExampleCommand>
-      </div>
-    </div>
-  );
   const commands = {
     help: (
       <div>
@@ -180,7 +154,7 @@ export default function Home() {
       <main style={{ height: "calc(100vh - 16px)" }}>
         {hasHydrated && (
           <ReactTerminal
-            welcomeMessage={welcomeMessage}
+            welcomeMessage={<WelcomeMessage />}
             commands={commands}
             enableInput
             defaultHandler={() => `Invalid command.`}
