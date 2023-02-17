@@ -45,10 +45,17 @@ export default function Home() {
           ? relayInfo.software.replace(/^.*?(http)/, "$1")
           : null;
         const paymentsUrl = relayInfo.payments_url;
+        const nostrWatchUrl = `https://nostr.watch/relay/${domain}`;
 
         return (
           <div>
             <pre>{JSON.stringify(relayInfo, null, 2)}</pre>
+            <p>
+              View relay stats on nostr.watch{" "}
+              <a href={nostrWatchUrl} target="_blank" rel="noreferrer">
+                {nostrWatchUrl}
+              </a>
+            </p>
             <p>
               View relay maintainer&apos;s profile on Snort{" "}
               <a href={snortProfileUrl} target="_blank" rel="noreferrer">
@@ -99,7 +106,30 @@ export default function Home() {
               </a>
             </p>
             {Number(relays?.length) > 0 && (
-              <p>Preferred relays: {relays?.join(", ")}</p>
+              <p>
+                Preferred relays:{" "}
+                {relays?.map((r, index) => {
+                  const nostrWatchUrl = `https://nostr.watch/relay/${r.replace(
+                    "wss://",
+                    ""
+                  )}`;
+                  const isLast = index === relays.length - 1;
+
+                  return (
+                    <>
+                      <a
+                        key={nostrWatchUrl}
+                        href={nostrWatchUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {r}
+                      </a>
+                      {!isLast && <span>, </span>}
+                    </>
+                  );
+                })}
+              </p>
             )}
           </div>
         );
