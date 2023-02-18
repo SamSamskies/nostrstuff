@@ -1,6 +1,7 @@
 import { HelpMenu, RelayInfo, WelcomeMessage, WhoIs } from "@/components";
 import { queryNip05 } from "@/utils";
 import { ReactTerminal } from "react-terminal";
+import { ExternalLink } from "@/components/ExternalLink";
 
 export const Terminal = () => {
   const commands = {
@@ -38,9 +39,9 @@ export const Terminal = () => {
     wtf: () => {
       return (
         <p>
-          <a href="https://nostr.how/" target="_blank" rel="noreferrer">
+          <ExternalLink href="https://nostr.how/">
             Click here to go to nostr.how to learn more about nostr.
-          </a>
+          </ExternalLink>
         </p>
       );
     },

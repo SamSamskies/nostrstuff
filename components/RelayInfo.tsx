@@ -1,4 +1,5 @@
 import { getSnortUrl, isValidUrl } from "@/utils";
+import { ExternalLink } from "@/components/ExternalLink";
 
 interface RelayInfoProps {
   domain: string;
@@ -23,30 +24,22 @@ export const RelayInfo = ({ domain, relayInfo }: RelayInfoProps) => {
       <pre>{JSON.stringify(relayInfo, null, 2)}</pre>
       <p>
         View relay stats on nostr.watch{" "}
-        <a href={nostrWatchUrl} target="_blank" rel="noreferrer">
-          {nostrWatchUrl}
-        </a>
+        <ExternalLink href={nostrWatchUrl}>{nostrWatchUrl}</ExternalLink>
       </p>
       <p>
         View relay maintainer&apos;s profile on Snort{" "}
-        <a href={snortProfileUrl} target="_blank" rel="noreferrer">
-          {snortProfileUrl}
-        </a>
+        <ExternalLink href={snortProfileUrl}>{snortProfileUrl}</ExternalLink>
       </p>
       {isValidUrl(softwareUrl) && (
         <p>
           Check out the code{" "}
-          <a href={softwareUrl} target="_blank" rel="noreferrer">
-            {softwareUrl}
-          </a>
+          <ExternalLink href={softwareUrl}>{softwareUrl}</ExternalLink>
         </p>
       )}
       {isValidUrl(paymentsUrl) && (
         <p>
           Make a payment for the relay{" "}
-          <a href={paymentsUrl} target="_blank" rel="noreferrer">
-            {paymentsUrl}
-          </a>
+          <ExternalLink href={paymentsUrl}>{paymentsUrl}</ExternalLink>
         </p>
       )}
     </>
