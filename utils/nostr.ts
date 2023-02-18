@@ -1,14 +1,15 @@
+export interface Nip05QueryResult {
+  pubkey: string;
+  relays?: string[];
+}
+
 /**
- * Copy pasta from nostr-tools
+ * Mostly copy pasta from nostr-tools
  * https://github.com/nbd-wtf/nostr-tools
  */
-
 export const queryNip05 = async (
   fullname: string
-): Promise<{
-  pubkey: string; // hex
-  relays?: string[];
-} | null> => {
+): Promise<Nip05QueryResult | null> => {
   let [name, domain] = fullname.split("@");
 
   if (!domain) {
