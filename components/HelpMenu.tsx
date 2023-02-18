@@ -1,28 +1,38 @@
+import { type ReactNode } from "react";
+import { ExternalLink } from "@/components/ExternalLink";
+
+const HelpMenuItem = ({
+  command,
+  children,
+}: {
+  command: string;
+  children: ReactNode;
+}) => {
+  return (
+    <p>
+      <strong>{command}</strong> - {children}
+    </p>
+  );
+};
+
 export const HelpMenu = () => {
   return (
     <>
-      <p>
-        <strong>ri &lt;RELAY_DOMAIN&gt;</strong> - Retrieves info about a nostr
-        relay if the relay supports{" "}
-        <a
-          href="https://github.com/nostr-protocol/nips/blob/master/11.md"
-          target="_blank"
-          rel="noreferrer"
-        >
+      <HelpMenuItem command="ri <RELAY_DOMAIN>">
+        Retrieves info about a nostr relay if the relay supports{" "}
+        <ExternalLink href="https://github.com/nostr-protocol/nips/blob/master/11.md">
           nip-11
-        </a>
+        </ExternalLink>
         .
-      </p>
-      <p>
-        <strong>whois &lt;NIP05_ADDRESS&gt;</strong> - Retrieves link to
-        user&apos;s profile on Snort and their preferred relays.
-      </p>
-      <p>
-        <strong>wtf</strong> - Type this if you are confused af.
-      </p>
-      <p>
-        <strong>clear</strong> - Clears the console.
-      </p>
+      </HelpMenuItem>
+      <HelpMenuItem command="whois <NIP05_ADDRESS>">
+        Retrieves link to user&apos;s profile on Snort and their preferred
+        relays.
+      </HelpMenuItem>
+      <HelpMenuItem command="wtf">
+        Type this if you are confused af.
+      </HelpMenuItem>
+      <HelpMenuItem command="clear">Clears the console.</HelpMenuItem>
     </>
   );
 };
