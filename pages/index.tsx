@@ -1,10 +1,8 @@
 import Head from "next/head";
-import { ReactTerminal } from "react-terminal";
-import { WelcomeMessage } from "@/components";
-import { useCommands, useIsHydrated } from "@/hooks";
+import { Terminal } from "@/components";
+import { useIsHydrated } from "@/hooks";
 
 export default function Home() {
-  const commands = useCommands();
   const hasHydrated = useIsHydrated();
 
   return (
@@ -36,14 +34,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ height: "calc(100vh - 16px)" }}>
-        {hasHydrated && (
-          <ReactTerminal
-            welcomeMessage={<WelcomeMessage />}
-            commands={commands}
-            enableInput
-            defaultHandler={() => `Invalid command.`}
-          />
-        )}
+        {hasHydrated && <Terminal />}
       </main>
     </>
   );
