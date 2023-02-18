@@ -2,37 +2,12 @@ import Head from "next/head";
 import { ReactTerminal } from "react-terminal";
 import { useState, useEffect } from "react";
 import { queryNip05, getSnortUrl, isValidUrl } from "@/utils";
-import { WelcomeMessage } from "@/components";
+import { HelpMenu, WelcomeMessage } from "@/components";
 
 export default function Home() {
   const [hasHydrated, setHasHydrated] = useState(false);
   const commands = {
-    help: (
-      <div>
-        <p>
-          <strong>ri &lt;RELAY_DOMAIN&gt;</strong> - Retrieves info about a
-          nostr relay if the relay supports{" "}
-          <a
-            href="https://github.com/nostr-protocol/nips/blob/master/11.md"
-            target="_blank"
-            rel="noreferrer"
-          >
-            nip-11
-          </a>
-          .
-        </p>
-        <p>
-          <strong>whois &lt;NIP05_ADDRESS&gt;</strong> - Retrieves link to
-          user&apos;s profile on Snort and their preferred relays.
-        </p>
-        <p>
-          <strong>wtf</strong> - Type this if you are confused af.
-        </p>
-        <p>
-          <strong>clear</strong> - Clears the console.
-        </p>
-      </div>
-    ),
+    help: <HelpMenu />,
 
     ri: async (domain: string) => {
       const response = await fetch(`/api/relay-info?domain=${domain}`);
