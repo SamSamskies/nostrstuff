@@ -32,6 +32,10 @@ export const HelpMenu = () => {
       <HelpMenuItem command="wtf">
         Type this if you are confused af.
       </HelpMenuItem>
+      <HelpMenuItem command="donate <AMOUNT_IN_SATS> <OPTIONAL_COMMENT>">
+        Generates a lightning invoice that you can pay to contribute to the
+        development of this site.
+      </HelpMenuItem>
       <HelpMenuItem command="clear">Clears the console.</HelpMenuItem>
     </>
   );

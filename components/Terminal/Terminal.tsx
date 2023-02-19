@@ -36,6 +36,37 @@ export const Terminal = () => {
       }
     },
 
+    donate: async (input: string) => {
+      const [_, amount, comment] = input.match(/^(\d+)\s*(.*)$/) ?? [];
+      const normalizedAmount = Number(amount);
+
+      if (isNaN(normalizedAmount) || normalizedAmount < 100) {
+        return "Invalid amount. Minimum donation is 100 sats.";
+      }
+
+      try {
+        const queryParams = new URLSearchParams({
+          amount: normalizedAmount.toString(),
+          lnUrlOrAddress: "samsamskies@strike.army",
+        });
+
+        if (comment) {
+          queryParams.set(
+            "comment",
+            comment.trim().replace(/^["']|["']$/g, "")
+          );
+        }
+
+        const response = await fetch(
+          `https://lnurlpay.com/api/invoice?${queryParams.toString()}`
+        );
+
+        return <p>{await response.text()}</p>;
+      } catch (error) {
+        return "Error generating invoice";
+      }
+    },
+
     wtf: () => {
       return (
         <p>
