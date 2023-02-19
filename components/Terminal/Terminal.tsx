@@ -2,6 +2,7 @@ import { HelpMenu, RelayInfo, WelcomeMessage, WhoIs } from "@/components";
 import { queryNip05 } from "@/utils";
 import { ReactTerminal } from "react-terminal";
 import { ExternalLink } from "@/components/ExternalLink";
+import { makeUrlWithParams } from "@/utils";
 
 export const Terminal = () => {
   const commands = {
@@ -45,16 +46,14 @@ export const Terminal = () => {
       }
 
       try {
-        const queryParams = new URLSearchParams({
+        const url = makeUrlWithParams("https://lnurlpay.com/api/invoice", {
           amount: normalizedAmount.toString(),
           lnUrlOrAddress: "samsamskies@strike.army",
           comment: comment
             ? comment.trim().replace(/^["']|["']$/g, "")
             : "nostrstuff donation",
         });
-        const response = await fetch(
-          `https://lnurlpay.com/api/invoice?${queryParams.toString()}`
-        );
+        const response = await fetch(url);
 
         return <p>{await response.text()}</p>;
       } catch (error) {
