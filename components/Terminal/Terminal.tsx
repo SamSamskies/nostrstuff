@@ -48,15 +48,10 @@ export const Terminal = () => {
         const queryParams = new URLSearchParams({
           amount: normalizedAmount.toString(),
           lnUrlOrAddress: "samsamskies@strike.army",
+          comment: comment
+            ? comment.trim().replace(/^["']|["']$/g, "")
+            : "nostrstuff donation",
         });
-
-        if (comment) {
-          queryParams.set(
-            "comment",
-            comment.trim().replace(/^["']|["']$/g, "")
-          );
-        }
-
         const response = await fetch(
           `https://lnurlpay.com/api/invoice?${queryParams.toString()}`
         );
