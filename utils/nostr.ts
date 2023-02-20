@@ -1,36 +1,43 @@
+import { bech32 } from "bech32";
+
+const { nip05, relayInit } = require("nostr-tools");
+
 export interface Nip05QueryResult {
   pubkey: string;
   relays?: string[];
 }
 
-/**
- * Mostly copy pasta from nostr-tools
- * https://github.com/nbd-wtf/nostr-tools
- */
-export const queryNip05 = async (
-  fullname: string
-): Promise<Nip05QueryResult | null> => {
-  let [name, domain] = fullname.split("@");
+export const queryNip05 = nip05.queryProfile;
 
-  if (!domain) {
-    // if there is no @, it is because it is just a domain, so assume the name is "_"
-    domain = name;
-    name = "_";
+const isHex = (str: string) => str.match(/^[0-9a-fA-F]+$/) !== null;
+
+const convertToHex = (bech32Value: string) => {
+  const decoded = bech32.decode(bech32Value);
+
+  return Buffer.from(bech32.fromWords(decoded.words)).toString("hex");
+};
+
+const normalizeEventId = (eventId: string) =>
+  isHex(eventId) ? eventId : convertToHex(eventId);
+
+export const checkRelayForEvent = async (relayUri: string, eventId: string) => {
+  try {
+    const relay = relayInit(relayUri);
+
+    await relay.connect();
+
+    relay.on("error", () => {
+      return `Failed to connect to ${relay.url}`;
+    });
+
+    const event = await relay.get({
+      ids: [normalizeEventId(eventId)],
+    });
+
+    relay.close();
+
+    return event;
+  } catch (error) {
+    return error instanceof Error ? error.message : "Something went wrong :(";
   }
-
-  if (!name.match(/^[A-Za-z0-9-_]+$/)) return null;
-
-  let res = await (
-    await fetch(`https://${domain}/.well-known/nostr.json?name=${name}`)
-  ).json();
-
-  if (!res?.names?.[name]) return null;
-
-  let pubkey = res.names[name] as string;
-  let relays = (res.relays?.[pubkey] || []) as string[]; // nip35
-
-  return {
-    pubkey,
-    relays,
-  };
 };

@@ -1,5 +1,5 @@
 import { HelpMenu, RelayInfo, WelcomeMessage, WhoIs } from "@/components";
-import { queryNip05 } from "@/utils";
+import { checkRelayForEvent, queryNip05 } from "@/utils";
 import { ReactTerminal } from "react-terminal";
 import { ExternalLink } from "@/components/ExternalLink";
 import { makeUrlWithParams } from "@/utils";
@@ -35,6 +35,29 @@ export const Terminal = () => {
       } catch (error) {
         return "User not found";
       }
+    },
+
+    fe: async (input: string) => {
+      const [relayUri, eventId] = input.trim().split(" ");
+
+      if (!eventId) {
+        return "Missing event id.";
+      }
+
+      if (!relayUri) {
+        return "Missing relay domain.";
+      }
+
+      const result = await checkRelayForEvent(relayUri, eventId);
+
+      return typeof result === "string" ? (
+        result
+      ) : (
+        <>
+          <p>{`Found it!`}</p>
+          <pre>{JSON.stringify(result, null, 2)}</pre>
+        </>
+      );
     },
 
     donate: async (input: string) => {
