@@ -11,7 +11,7 @@ export const queryNip05 = nip05.queryProfile;
 
 const isHex = (str: string) => str.match(/^[0-9a-fA-F]+$/) !== null;
 
-const convertToHex = (bech32Value: string) => {
+export const convertToHex = (bech32Value: string) => {
   const decoded = bech32.decode(bech32Value);
 
   return Buffer.from(bech32.fromWords(decoded.words)).toString("hex");

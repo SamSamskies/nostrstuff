@@ -32,6 +32,10 @@ export const HelpMenu = () => {
       <HelpMenuItem command="fe <RELAY_URI> <EVENT_ID>">
         Checks to see if a relay has a given event.
       </HelpMenuItem>
+      <HelpMenuItem command="convert <BECH_32_VALUE>">
+        Converts a bech32 value to hex. You can use this to convert an npub
+        pubkey to hex.
+      </HelpMenuItem>
       <HelpMenuItem command="wtf">
         Type this if you are confused af.
       </HelpMenuItem>

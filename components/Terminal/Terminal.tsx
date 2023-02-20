@@ -1,5 +1,5 @@
 import { HelpMenu, RelayInfo, WelcomeMessage, WhoIs } from "@/components";
-import { checkRelayForEvent, queryNip05 } from "@/utils";
+import { checkRelayForEvent, convertToHex, queryNip05 } from "@/utils";
 import { ReactTerminal } from "react-terminal";
 import { ExternalLink } from "@/components/ExternalLink";
 import { makeUrlWithParams } from "@/utils";
@@ -63,6 +63,8 @@ export const Terminal = () => {
         </>
       );
     },
+
+    convert: (bech32Value: string) => <p>{convertToHex(bech32Value)}</p>,
 
     donate: async (input: string) => {
       const [_, amount, comment] = input.match(/^(\d+)\s*(.*)$/) ?? [];
