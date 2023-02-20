@@ -50,6 +50,10 @@ export const Terminal = () => {
 
       const result = await checkRelayForEvent(relayUri, eventId);
 
+      if (result === null) {
+        return <p>Not found!</p>;
+      }
+
       return typeof result === "string" ? (
         result
       ) : (
