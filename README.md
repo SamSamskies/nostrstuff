@@ -7,6 +7,7 @@ Web app that can do things such as query info about nostr relays and find people
 
 ![Screenshot 2023-02-16 at 11 01 05 AM](https://user-images.githubusercontent.com/3655410/219435693-5e02cbd8-4206-450a-ba0a-2f6a334ecffd.png)
 
+![Screenshot 2023-02-19 at 9 39 35 PM](https://user-images.githubusercontent.com/3655410/220004221-47e4daac-019f-4e9e-b728-c7df8d11f49d.png)
 
 
 ## Getting Started
