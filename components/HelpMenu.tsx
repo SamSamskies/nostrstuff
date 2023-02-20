@@ -29,7 +29,7 @@ export const HelpMenu = () => {
         Retrieves link to user&apos;s profile on Snort and their preferred
         relays.
       </HelpMenuItem>
-      <HelpMenuItem command="fe <RELAY_DOMAIN> <EVENT_ID>">
+      <HelpMenuItem command="fe <RELAY_URI> <EVENT_ID>">
         Checks to see if a relay has a given event.
       </HelpMenuItem>
       <HelpMenuItem command="wtf">
