@@ -5,6 +5,7 @@ import { ExternalLink } from "@/components/ExternalLink";
 import { makeUrlWithParams } from "@/utils";
 import useLocalStorage from "use-local-storage";
 import { THEMES } from "@/constants";
+import { GitHubRepoLink } from "@/components/Terminal/GitHubRepoLink";
 
 export const Terminal = () => {
   const [theme, setTheme] = useLocalStorage("theme", "light");
@@ -113,12 +114,17 @@ export const Terminal = () => {
   };
 
   return (
-    <ReactTerminal
-      welcomeMessage={<WelcomeMessage />}
-      commands={commands}
-      enableInput
-      defaultHandler={() => `Invalid command.`}
-      theme={theme}
-    />
+    <>
+      <GitHubRepoLink
+        color={["light", "dracula"].includes(theme) ? "black" : "white"}
+      />
+      <ReactTerminal
+        welcomeMessage={<WelcomeMessage />}
+        commands={commands}
+        enableInput
+        defaultHandler={() => `Invalid command.`}
+        theme={theme}
+      />
+    </>
   );
 };

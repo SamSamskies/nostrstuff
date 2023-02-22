@@ -1,8 +1,6 @@
 import Head from "next/head";
 import { Terminal } from "@/components";
 import { useIsHydrated } from "@/hooks";
-import Image from "next/image";
-import { ExternalLink } from "@/components/ExternalLink";
 
 export default function Home() {
   const hasHydrated = useIsHydrated();
@@ -36,17 +34,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ height: "calc(100vh - 16px)" }}>
-        <ExternalLink
-          href="https://github.com/SamSamskies/nostrstuff"
-          style={{ position: "fixed", right: 16, top: 12, zIndex: 1 }}
-        >
-          <Image
-            src="/github-mark.png"
-            width={16}
-            height={16}
-            alt="GitHub logo"
-          />
-        </ExternalLink>
         {hasHydrated && <Terminal />}
       </main>
     </>
