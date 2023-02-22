@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { useIsMobile } from "@/hooks";
 
 const ExampleCommand = ({ children }: { children: ReactNode }) => {
   return (
@@ -16,14 +17,25 @@ const ExampleCommand = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const WelcomeMessage = () => (
-  <div style={{ marginBottom: 16 }}>
-    <p>Welcome to Nostr Stuff 🤙</p>
-    <p>Type &quot;help&quot; for all available commands.</p>
-    <div>
-      Example commands:
-      <ExampleCommand>ri eden.nostr.land</ExampleCommand>
-      <ExampleCommand>whois samsamskies@nostrstuff.com</ExampleCommand>
+export const WelcomeMessage = () => {
+  const isMobile = useIsMobile();
+
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <p>Welcome to Nostr Stuff 🤙</p>
+      <p>Type &quot;help&quot; for all available commands.</p>
+      <div>
+        Example commands:
+        <ExampleCommand>ri eden.nostr.land</ExampleCommand>
+        <ExampleCommand>whois samsamskies@nostrstuff.com</ExampleCommand>
+      </div>
+      {isMobile && (
+        <p>
+          <small>
+            Paste functionality is not currently available on mobile.
+          </small>
+        </p>
+      )}
     </div>
-  </div>
-);
+  );
+};
