@@ -18,7 +18,7 @@ export const useIsMobile = () => {
         navigator.userAgent
       );
 
-    const isMobile = isMobileScreenSize || isTouchDevice || isMobileUserAgent;
+    const isMobile = isMobileScreenSize && isTouchDevice && isMobileUserAgent;
 
     setIsMobile(isMobile);
   }, []);
