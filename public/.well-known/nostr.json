@@ -10,7 +10,8 @@
       "wss://nostr.fmt.wiz.biz",
       "wss://nostr.milou.lol",
       "wss://relay.snort.social",
-      "wss://relay.nostr.info"
+      "wss://relay.nostr.info",
+      "wss://nostr.wine"
     ]
   }
 }
