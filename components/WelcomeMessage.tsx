@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { isMobile } from "react-device-detect";
 
 const ExampleCommand = ({ children }: { children: ReactNode }) => {
   return (
@@ -26,10 +25,5 @@ export const WelcomeMessage = () => (
       <ExampleCommand>ri eden.nostr.land</ExampleCommand>
       <ExampleCommand>whois samsamskies@nostrstuff.com</ExampleCommand>
     </div>
-    {isMobile && (
-      <p>
-        <small>Paste functionality is not currently available on mobile.</small>
-      </p>
-    )}
   </div>
 );
