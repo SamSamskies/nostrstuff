@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { ExternalLink } from "@/components/ExternalLink";
+import { THEMES } from "@/constants";
 
 const HelpMenuItem = ({
   command,
@@ -42,6 +43,9 @@ export const HelpMenu = () => {
       <HelpMenuItem command="donate <AMOUNT_IN_SATS> <OPTIONAL_COMMENT>">
         Generates a lightning invoice that you can pay to contribute to the
         development of this site.
+      </HelpMenuItem>
+      <HelpMenuItem command={`theme <${THEMES.join(" | ")}>`}>
+        Changes the theme of the terminal.
       </HelpMenuItem>
       <HelpMenuItem command="clear">Clears the console.</HelpMenuItem>
     </>

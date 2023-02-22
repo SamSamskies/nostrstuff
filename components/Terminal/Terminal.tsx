@@ -3,8 +3,11 @@ import { checkRelayForEvent, convertToHex, queryNip05 } from "@/utils";
 import { ReactTerminal } from "react-terminal";
 import { ExternalLink } from "@/components/ExternalLink";
 import { makeUrlWithParams } from "@/utils";
+import useLocalStorage from "use-local-storage";
+import { THEMES } from "@/constants";
 
 export const Terminal = () => {
+  const [theme, setTheme] = useLocalStorage("theme", "light");
   const commands = {
     help: <HelpMenu />,
 
@@ -99,6 +102,14 @@ export const Terminal = () => {
         </p>
       );
     },
+
+    theme: (theme: string) => {
+      if (!THEMES.includes(theme)) {
+        return <p>{`${theme} is not a valid theme.`}</p>;
+      }
+
+      setTheme(theme);
+    },
   };
 
   return (
@@ -107,6 +118,7 @@ export const Terminal = () => {
       commands={commands}
       enableInput
       defaultHandler={() => `Invalid command.`}
+      theme={theme}
     />
   );
 };
