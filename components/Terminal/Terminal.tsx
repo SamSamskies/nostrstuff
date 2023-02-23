@@ -68,7 +68,18 @@ export const Terminal = () => {
       );
     },
 
-    convert: (bech32Value: string) => <p>{convertToHex(bech32Value)}</p>,
+    convert: (bech32Value: string) => {
+      let result;
+
+      try {
+        result = convertToHex(bech32Value);
+      } catch (error) {
+        result =
+          error instanceof Error ? error.message : "Something went wrong :(";
+      }
+
+      return <p>{result}</p>;
+    },
 
     donate: async (input: string) => {
       const [_, amount, comment] = input.match(/^(\d+)\s*(.*)$/) ?? [];
