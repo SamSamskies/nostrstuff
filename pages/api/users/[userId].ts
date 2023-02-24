@@ -11,11 +11,9 @@ export default async function handler(
       return;
     }
 
-    if (Array.isArray(relays)) {
-      return relays;
-    }
-
-    return relays.includes(",") ? relays.split(",") : [relays];
+    return (Array.isArray(relays) ? relays : relays.split(",")).map(
+      decodeURIComponent
+    );
   };
 
   switch (req.method) {
