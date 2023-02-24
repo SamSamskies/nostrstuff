@@ -1,5 +1,5 @@
 import { HelpMenu, RelayInfo, WelcomeMessage, WhoIs } from "@/components";
-import { checkRelayForEvent, convertToHex, queryNip05 } from "@/utils";
+import { convertToHex, findEvent, queryNip05 } from "@/utils";
 import { ReactTerminal } from "react-terminal";
 import { ExternalLink } from "@/components/ExternalLink";
 import { makeUrlWithParams } from "@/utils";
@@ -54,7 +54,7 @@ export const Terminal = () => {
         return "Missing relay domain.";
       }
 
-      const result = await checkRelayForEvent(relayUri, eventId);
+      const result = await findEvent([relayUri], eventId);
 
       if (result === null) {
         return <p>Not found!</p>;

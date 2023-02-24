@@ -1,6 +1,16 @@
 import { bech32 } from "bech32";
 
-const { nip05, nip19, relayInit } = require("nostr-tools");
+const { nip05, nip19, SimplePool } = require("nostr-tools");
+
+type Filter = {
+  ids?: string[];
+  kinds?: number[];
+  authors?: string[];
+  since?: number;
+  until?: number;
+  limit?: number;
+  [key: `#${string}`]: string[];
+};
 
 export interface Nip05QueryResult {
   pubkey: string;
@@ -17,30 +27,22 @@ export const convertToHex = (bech32Value: string) => {
   return Buffer.from(bech32.fromWords(decoded.words)).toString("hex");
 };
 
-const normalizeEventId = (eventId: string) =>
-  isHex(eventId) ? eventId : convertToHex(eventId);
+const normalizeId = (id: string) => (isHex(id) ? id : convertToHex(id));
 
-export const checkRelayForEvent = async (relayUri: string, eventId: string) => {
+const findOneFromRelays = async (relays: string[], filter: Filter) => {
   try {
-    const relay = relayInit(relayUri);
+    const pool = new SimplePool();
 
-    await relay.connect();
-
-    relay.on("error", () => {
-      return `Failed to connect to ${relay.url}`;
-    });
-
-    const event = await relay.get({
-      ids: [normalizeEventId(eventId)],
-    });
-
-    relay.close();
-
-    return event;
+    return await pool.get(relays, filter);
   } catch (error) {
     return error instanceof Error ? error.message : "Something went wrong :(";
   }
 };
+
+export const findEvent = async (relays: string[], eventId: string) =>
+  findOneFromRelays(relays, {
+    ids: [normalizeId(eventId)],
+  });
 
 export const encodeNpub = nip19.npubEncode;
 
