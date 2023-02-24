@@ -1,5 +1,5 @@
 import { HelpMenu, RelayInfo, WelcomeMessage, WhoIs } from "@/components";
-import { checkRelayForEvent, convertToHex, queryNip05 } from "@/utils";
+import { convertToHex, findEvent, queryNip05 } from "@/utils";
 import { ReactTerminal } from "react-terminal";
 import { ExternalLink } from "@/components/ExternalLink";
 import { makeUrlWithParams } from "@/utils";
@@ -54,7 +54,7 @@ export const Terminal = () => {
         return "Missing relay domain.";
       }
 
-      const result = await checkRelayForEvent(relayUri, eventId);
+      const result = await findEvent([relayUri], eventId);
 
       if (result === null) {
         return <p>Not found!</p>;
@@ -72,6 +72,54 @@ export const Terminal = () => {
           <NostrUriLink kind={0} hexId={result.pubkey} />
         </>
       );
+    },
+
+    fu: async (input: string) => {
+      const [userId, relays] = input.trim().split(" ");
+
+      if (!userId) {
+        return "Missing user id.";
+      }
+
+      const response = await fetch(
+        makeUrlWithParams(`${window.location.href}/api/users/${userId}`, {
+          relays,
+        })
+      );
+
+      if (response.status === 200) {
+        const event = await response.json();
+        let content;
+
+        try {
+          content = JSON.parse(event.content);
+        } catch {}
+
+        return (
+          <>
+            <div>
+              Raw event:
+              <pre>{JSON.stringify(event, null, 2)}</pre>
+            </div>
+            {content && (
+              <>
+                <div>Parsed content:</div>
+                <pre>{JSON.stringify(content, null, 2)}</pre>
+              </>
+            )}
+          </>
+        );
+      }
+
+      if (response.status === 404) {
+        return "Not found!";
+      }
+
+      if (response.status === 500) {
+        return await response.text();
+      }
+
+      return "Something went wrong. Try again later. :(";
     },
 
     convert: (bech32Value: string) => {

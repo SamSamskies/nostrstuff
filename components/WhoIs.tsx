@@ -1,5 +1,6 @@
 import { Nip05QueryResult } from "@/utils";
 import { SnortLink } from "@/components/SnortLink";
+import { Fragment } from "react";
 
 export const WhoIs = ({ pubkey, relays }: Nip05QueryResult) => {
   return (
@@ -16,17 +17,12 @@ export const WhoIs = ({ pubkey, relays }: Nip05QueryResult) => {
             const isLast = index === relays.length - 1;
 
             return (
-              <>
-                <a
-                  key={nostrWatchUrl}
-                  href={nostrWatchUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+              <Fragment key={nostrWatchUrl}>
+                <a href={nostrWatchUrl} target="_blank" rel="noreferrer">
                   {r}
                 </a>
                 {!isLast && <span>, </span>}
-              </>
+              </Fragment>
             );
           })}
         </p>

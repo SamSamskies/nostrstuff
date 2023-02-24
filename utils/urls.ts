@@ -28,9 +28,11 @@ export const makeUrlWithParams = (
 ) => {
   const urlObj = new URL(url);
 
-  Object.entries(params).forEach(([key, value]) =>
-    urlObj.searchParams.append(key, value)
-  );
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) {
+      urlObj.searchParams.append(key, value);
+    }
+  });
 
   return urlObj.toString();
 };
