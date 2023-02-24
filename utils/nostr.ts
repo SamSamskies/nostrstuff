@@ -1,4 +1,5 @@
 import { bech32 } from "bech32";
+import "websocket-polyfill";
 
 const { nip05, nip19, SimplePool } = require("nostr-tools");
 
@@ -39,7 +40,16 @@ const findOneFromRelays = async (relays: string[], filter: Filter) => {
   }
 };
 
-export const findEvent = async (relays: string[], eventId: string) =>
+export const getUserProfile = (
+  userId: string,
+  relays: string[] = ["wss://relay.damus.io", "wss://relay.snort.social"]
+) =>
+  findOneFromRelays(
+    relays ?? ["wss://relay.damus.io", "wss://relay.snort.social"],
+    { authors: [normalizeId(userId)], kinds: [0] }
+  );
+
+export const findEvent = (relays: string[], eventId: string) =>
   findOneFromRelays(relays, {
     ids: [normalizeId(eventId)],
   });
