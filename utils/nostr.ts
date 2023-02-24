@@ -42,6 +42,8 @@ export const checkRelayForEvent = async (relayUri: string, eventId: string) => {
   }
 };
 
+export const encodeNpub = nip19.npubEncode;
+
 export const makeNostrUri = (prefix: "npub" | "note", hexId: string) => {
   const addNostrPrefix = (nip19Id: string) => `nostr:${nip19Id}
   `;

@@ -1,13 +1,13 @@
-import { nip19 } from "nostr-tools";
+import { encodeNpub } from "@/utils/nostr";
 
 export const makeSnortUrl = (prefix: "npub" | "note", hexId: string) => {
   const baseUrl = "https://snort.social";
 
   switch (prefix) {
     case "npub":
-      return `${baseUrl}/p/${nip19.npubEncode(hexId)}`;
+      return `${baseUrl}/p/${encodeNpub(hexId)}`;
     case "note":
-      return `${baseUrl}/e/${nip19.noteEncode(hexId)}`;
+      return `${baseUrl}/e/${encodeNpub(hexId)}`;
     default:
       return null;
   }
