@@ -1,15 +1,10 @@
-import { getSnortUrl, Nip05QueryResult } from "@/utils";
-import { ExternalLink } from "@/components/ExternalLink";
+import { Nip05QueryResult } from "@/utils";
+import { SnortLink } from "@/components/SnortLink";
 
 export const WhoIs = ({ pubkey, relays }: Nip05QueryResult) => {
-  const snortProfileUrl = getSnortUrl(pubkey);
-
   return (
     <>
-      <p>
-        View profile on Snort{" "}
-        <ExternalLink href={snortProfileUrl}>{snortProfileUrl}</ExternalLink>
-      </p>
+      <SnortLink kind={0} hexId={pubkey} />
       {Number(relays?.length) > 0 && (
         <p>
           Preferred relays:{" "}

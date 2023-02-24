@@ -1,5 +1,17 @@
-export const getSnortUrl = (pubkey: string) =>
-  `https://snort.social/p/${pubkey}`;
+import { nip19 } from "nostr-tools";
+
+export const makeSnortUrl = (prefix: "npub" | "note", hexId: string) => {
+  const baseUrl = "https://snort.social";
+
+  switch (prefix) {
+    case "npub":
+      return `${baseUrl}/p/${nip19.npubEncode(hexId)}`;
+    case "note":
+      return `${baseUrl}/e/${nip19.noteEncode(hexId)}`;
+    default:
+      return null;
+  }
+};
 
 export const isValidUrl = (url: string = "") => {
   try {

@@ -1,6 +1,6 @@
 import { bech32 } from "bech32";
 
-const { nip05, relayInit } = require("nostr-tools");
+const { nip05, nip19, relayInit } = require("nostr-tools");
 
 export interface Nip05QueryResult {
   pubkey: string;
@@ -39,5 +39,18 @@ export const checkRelayForEvent = async (relayUri: string, eventId: string) => {
     return event;
   } catch (error) {
     return error instanceof Error ? error.message : "Something went wrong :(";
+  }
+};
+
+export const makeNostrUri = (prefix: "npub" | "note", hexId: string) => {
+  const addNostrPrefix = (nip19Id: string) => `nostr:${nip19Id}
+  `;
+  switch (prefix) {
+    case "npub":
+      return addNostrPrefix(nip19.npubEncode(hexId));
+    case "note":
+      return addNostrPrefix(nip19.noteEncode(hexId));
+    default:
+      return null;
   }
 };

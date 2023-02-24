@@ -1,4 +1,4 @@
-import { getSnortUrl, isValidUrl } from "@/utils";
+import { isValidUrl, makeSnortUrl } from "@/utils";
 import { ExternalLink } from "@/components/ExternalLink";
 
 interface RelayInfoProps {
@@ -12,7 +12,7 @@ interface RelayInfoProps {
 }
 
 export const RelayInfo = ({ domain, relayInfo }: RelayInfoProps) => {
-  const snortProfileUrl = getSnortUrl(relayInfo.pubkey);
+  const snortProfileUrl = makeSnortUrl("npub", relayInfo.pubkey);
   const softwareUrl = relayInfo.software
     ? relayInfo.software.replace(/^.*?(http)/, "$1")
     : "";
@@ -26,10 +26,12 @@ export const RelayInfo = ({ domain, relayInfo }: RelayInfoProps) => {
         View relay stats on nostr.watch{" "}
         <ExternalLink href={nostrWatchUrl}>{nostrWatchUrl}</ExternalLink>
       </p>
-      <p>
-        View relay maintainer&apos;s profile on Snort{" "}
-        <ExternalLink href={snortProfileUrl}>{snortProfileUrl}</ExternalLink>
-      </p>
+      {snortProfileUrl && (
+        <p>
+          View relay maintainer&apos;s profile on Snort{" "}
+          <ExternalLink href={snortProfileUrl}>{snortProfileUrl}</ExternalLink>
+        </p>
+      )}
       {isValidUrl(softwareUrl) && (
         <p>
           Check out the code{" "}
