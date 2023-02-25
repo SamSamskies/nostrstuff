@@ -8,27 +8,12 @@ export const NostrUriLink = ({
   hexId: string;
   kind: number;
 }) => {
-  if (kind === 0) {
-    const nostrUri = makeNostrUri("npub", hexId);
+  const nostrUri = makeNostrUri(kind === 0 ? "npub" : "note", hexId);
 
-    return nostrUri ? (
-      <p>
-        View author profile on mobile or desktop Nostr app{" "}
-        <ExternalLink href={nostrUri}>{nostrUri}</ExternalLink>
-      </p>
-    ) : null;
-  }
-
-  if (kind === 1) {
-    const nostrUri = makeNostrUri("note", hexId);
-
-    return nostrUri ? (
-      <p>
-        View note on mobile or desktop Nostr app{" "}
-        <ExternalLink href={nostrUri}>{nostrUri}</ExternalLink>
-      </p>
-    ) : null;
-  }
-
-  return null;
+  return nostrUri ? (
+    <p>
+      View {kind === 0 ? "author profile" : "note"} on mobile or desktop Nostr
+      app <ExternalLink href={nostrUri}>{nostrUri}</ExternalLink>
+    </p>
+  ) : null;
 };
