@@ -7,3 +7,8 @@ export const THEMES = [
   "matrix",
   "dracula",
 ];
+
+export const DEFAULT_RELAYS = [
+  "wss://relay.damus.io",
+  "wss://relay.snort.social",
+];
