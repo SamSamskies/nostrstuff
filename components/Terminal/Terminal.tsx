@@ -1,13 +1,14 @@
 import { HelpMenu, RelayInfo, WelcomeMessage, WhoIs } from "@/components";
 import { convertToHex, encodeNip19, findEvent, queryNip05 } from "@/utils";
-import { ReactTerminal } from "react-terminal";
+
 import { ExternalLink } from "@/components/ExternalLink";
+import { GitHubRepoLink } from "@/components/Terminal/GitHubRepoLink";
+import { NostrUriLink } from "@/components/NostrUriLink";
+import { ReactTerminal } from "react-terminal";
+import { SnortLink } from "@/components/SnortLink";
+import { THEMES } from "@/constants";
 import { makeUrlWithParams } from "@/utils";
 import useLocalStorage from "use-local-storage";
-import { THEMES } from "@/constants";
-import { GitHubRepoLink } from "@/components/Terminal/GitHubRepoLink";
-import { SnortLink } from "@/components/SnortLink";
-import { NostrUriLink } from "@/components/NostrUriLink";
 
 export const Terminal = () => {
   const [theme, setTheme] = useLocalStorage("theme", "light");
@@ -66,8 +67,12 @@ export const Terminal = () => {
         <>
           <p>{`Found it!`}</p>
           <pre>{JSON.stringify(result, null, 2)}</pre>
-          {result.kind === 1 && <SnortLink kind={1} hexId={result.id} />}
-          {result.kind === 1 && <NostrUriLink kind={1} hexId={result.id} />}
+          {result.kind === 1 && (
+            <>
+              <SnortLink kind={1} hexId={result.id} />
+              <NostrUriLink kind={1} hexId={result.id} />
+            </>
+          )}
           <SnortLink kind={0} hexId={result.pubkey} />
           <NostrUriLink kind={0} hexId={result.pubkey} />
         </>
@@ -200,9 +205,7 @@ export const Terminal = () => {
 
   return (
     <>
-      <GitHubRepoLink
-        color={["light", "dracula"].includes(theme) ? "black" : "white"}
-      />
+      <GitHubRepoLink color={theme === "light" ? "black" : "white"} />
       <ReactTerminal
         welcomeMessage={<WelcomeMessage />}
         commands={commands}
