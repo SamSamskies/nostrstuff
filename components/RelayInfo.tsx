@@ -1,5 +1,7 @@
 import { isValidUrl, makeSnortUrl } from "@/utils";
+
 import { ExternalLink } from "@/components/ExternalLink";
+import React from "react";
 
 interface RelayInfoProps {
   domain: string;
@@ -11,7 +13,7 @@ interface RelayInfoProps {
   };
 }
 
-export const RelayInfo = ({ domain, relayInfo }: RelayInfoProps) => {
+export const RelayInfo: React.FC<RelayInfoProps> = ({ domain, relayInfo }) => {
   const snortProfileUrl = makeSnortUrl("npub", relayInfo.pubkey);
   const softwareUrl = relayInfo.software
     ? relayInfo.software.replace(/^.*?(http)/, "$1")
