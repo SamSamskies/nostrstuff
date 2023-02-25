@@ -8,13 +8,11 @@ const HelpMenuItem = ({
 }: {
   command: string;
   children: ReactNode;
-}) => {
-  return (
-    <p>
-      <strong>{command}</strong> - {children}
-    </p>
-  );
-};
+}) => (
+  <p>
+    <strong>{command}</strong> - {children}
+  </p>
+);
 
 export const HelpMenu = () => {
   return (

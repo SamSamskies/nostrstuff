@@ -1,6 +1,6 @@
+import { Fragment } from "react";
 import { Nip05QueryResult } from "@/utils";
 import { SnortLink } from "@/components/SnortLink";
-import { Fragment } from "react";
 
 export const WhoIs = ({ pubkey, relays }: Nip05QueryResult) => {
   return (
