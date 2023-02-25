@@ -2,15 +2,13 @@ import { encodeNpub } from "@/utils/nostr";
 
 export const makeSnortUrl = (prefix: "npub" | "note", hexId: string) => {
   const baseUrl = "https://snort.social";
+  const encodedId = encodeNpub(hexId);
+  const urlMap = {
+    npub: `${baseUrl}/p/${encodedId}`,
+    note: `${baseUrl}/e/${encodedId}`,
+  };
 
-  switch (prefix) {
-    case "npub":
-      return `${baseUrl}/p/${encodeNpub(hexId)}`;
-    case "note":
-      return `${baseUrl}/e/${encodeNpub(hexId)}`;
-    default:
-      return null;
-  }
+  return urlMap[prefix] || null;
 };
 
 export const isValidUrl = (url: string = "") => {
@@ -29,7 +27,7 @@ export const makeUrlWithParams = (
   const urlObj = new URL(url);
 
   Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) {
+    if (value) {
       urlObj.searchParams.append(key, value);
     }
   });
