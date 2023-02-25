@@ -56,6 +56,17 @@ export const findEvent = (relays: string[], eventId: string) =>
 
 export const encodeNpub = nip19.npubEncode;
 
+export const encodeNip19 = (prefix: "npub" | "note", hexId: string) => {
+  switch (prefix) {
+    case "npub":
+      return encodeNpub(hexId);
+    case "note":
+      return nip19.noteEncode(hexId);
+    default:
+      return null;
+  }
+};
+
 export const makeNostrUri = (prefix: "npub" | "note", hexId: string) => {
   const addNostrPrefix = (nip19Id: string) => `nostr:${nip19Id}
   `;

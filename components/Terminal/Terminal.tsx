@@ -1,5 +1,5 @@
 import { HelpMenu, RelayInfo, WelcomeMessage, WhoIs } from "@/components";
-import { convertToHex, findEvent, queryNip05 } from "@/utils";
+import { convertToHex, encodeNip19, findEvent, queryNip05 } from "@/utils";
 import { ReactTerminal } from "react-terminal";
 import { ExternalLink } from "@/components/ExternalLink";
 import { makeUrlWithParams } from "@/utils";
@@ -133,6 +133,26 @@ export const Terminal = () => {
       }
 
       return <p>{result}</p>;
+    },
+
+    encode: (input: string) => {
+      const [prefix, hexId] = input.trim().split(" ");
+
+      if (prefix !== "npub" && prefix !== "note") {
+        return `${prefix} is not supported. Currently only npub and note prefixes are supported.`;
+      }
+
+      if (!hexId) {
+        return "Please provide hex value.";
+      }
+
+      try {
+        return <p>{encodeNip19(prefix, hexId)}</p>;
+      } catch (error) {
+        return error instanceof Error
+          ? error.message
+          : "Something went wrong :(";
+      }
     },
 
     donate: async (input: string) => {
