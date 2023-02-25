@@ -44,6 +44,10 @@ export const HelpMenu = () => {
         Converts a simple bech32 value such as your pubkey in npub format to
         hex.
       </HelpMenuItem>
+      <HelpMenuItem command="encode <npub | note> <HEX_VALUE>">
+        Encodes a hex value in bech32 format with either a prefix of npub or
+        note.
+      </HelpMenuItem>
       <HelpMenuItem command="wtf">
         Type this if you are confused af.
       </HelpMenuItem>
