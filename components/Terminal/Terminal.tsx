@@ -139,7 +139,7 @@ export const Terminal = () => {
       const [prefix, hexId] = input.trim().split(" ");
 
       if (prefix !== "npub" && prefix !== "note") {
-        return `${prefix} is not supported. Currently only npub and note prefixes are supported.`;
+        return `${prefix} prefix is not supported. Currently only npub and note prefixes are supported.`;
       }
 
       if (!hexId) {
