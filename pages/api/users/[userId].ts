@@ -21,10 +21,13 @@ export default async function handler(
       const result = await getUserProfile(userId as string, normalizeRelays());
 
       if (typeof result === "string") {
+        console.error(result);
         res.status(500).end(result);
       } else if (result === null) {
         res.status(404).end();
       } else {
+        // TODO: remove this after finished debugging deployment
+        console.log(result);
         res.status(200).json(result);
       }
       break;
