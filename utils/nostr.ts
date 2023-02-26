@@ -42,7 +42,11 @@ const findOneFromRelays = async (relays: string[], filter: Filter) => {
     return error instanceof Error ? error.message : "Something went wrong :(";
   } finally {
     if (pool) {
-      pool.close();
+      try {
+        pool.close();
+      } catch {
+        // fail silently for errors that happen when closing the pool
+      }
     }
   }
 };
