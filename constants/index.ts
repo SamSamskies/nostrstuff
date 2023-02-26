@@ -11,4 +11,9 @@ export const THEMES = [
 export const DEFAULT_RELAYS = [
   "wss://relay.damus.io",
   "wss://relay.snort.social",
+  "wss://nostr.wine",
+  "wss://eden.nostr.land",
+  "wss://relay.orangepill.dev",
+  "wss://nostr.fmt.wiz.biz",
+  "wss://nostr.milou.lol",
 ];

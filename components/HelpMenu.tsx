@@ -35,9 +35,10 @@ export const HelpMenu = () => {
       </HelpMenuItem>
       <HelpMenuItem command="fu <USER_ID> <OPTIONAL_RELAYS>">
         Returns user profile if found on specified relays. If no relays are
-        specified, wss://relay.damus.io and wss://relay.snort.social will be
-        used. OPTIONAL_RELAYS value must be separated by a comma without spaces
-        e.g. fu npub1vp8fdcyejd4pqjyrjk9sgz68vuhq7pyvnzk8j0ehlljvwgp8n6eqsrnpsw
+        specified, a bunch of default relays including wss://relay.damus.io,
+        wss://relay.snort.social will be used. OPTIONAL_RELAYS value must be
+        separated by a comma without spaces e.g. fu
+        npub1vp8fdcyejd4pqjyrjk9sgz68vuhq7pyvnzk8j0ehlljvwgp8n6eqsrnpsw
         wss://nostr.fmt.wiz.biz,wss://relay.snort.social
       </HelpMenuItem>
       <HelpMenuItem command="convert <SIMPLE_BECH_32_VALUE>">
