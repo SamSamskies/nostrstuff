@@ -32,12 +32,18 @@ export const convertToHex = (bech32Value: string) => {
 const normalizeId = (id: string) => (isHex(id) ? id : convertToHex(id));
 
 const findOneFromRelays = async (relays: string[], filter: Filter) => {
+  let pool;
+
   try {
-    const pool = new SimplePool();
+    pool = new SimplePool();
 
     return await pool.get(relays, filter);
   } catch (error) {
     return error instanceof Error ? error.message : "Something went wrong :(";
+  } finally {
+    if (pool) {
+      pool.close();
+    }
   }
 };
 
