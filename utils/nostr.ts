@@ -69,8 +69,8 @@ export const encodeNip19 = (prefix: "npub" | "note", hexId: string) => {
 };
 
 export const makeNostrUri = (prefix: "npub" | "note", hexId: string) => {
-  const addNostrPrefix = (nip19Id: string) => `nostr:${nip19Id}
-  `;
+  const addNostrPrefix = (nip19Id: string) => `nostr:${nip19Id}`;
+
   switch (prefix) {
     case "npub":
       return addNostrPrefix(nip19.npubEncode(hexId));
