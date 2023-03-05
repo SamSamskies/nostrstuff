@@ -27,8 +27,7 @@ export const HelpMenu = () => {
         .
       </HelpMenuItem>
       <HelpMenuItem command="whois <NIP05_ADDRESS>">
-        Retrieves link to user&apos;s profile on Snort and their preferred
-        relays.
+        Retrieves links to user&apos;s profile and their preferred relays.
       </HelpMenuItem>
       <HelpMenuItem command="fe <RELAY_URI> <EVENT_ID>">
         Returns event if found on a specified relay.
