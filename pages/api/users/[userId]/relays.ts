@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUserProfile } from "@/utils";
+import { getUserRelays } from "@/utils";
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,10 +15,19 @@ export default async function handler(
       decodeURIComponent
     );
   };
+  const formatResult = (result: any) => {
+    const relayData = JSON.parse(result.content);
+
+    return Object.keys(relayData).map((key) => ({
+      relay: key,
+      read: relayData[key].read,
+      write: relayData[key].write,
+    }));
+  };
 
   switch (req.method) {
     case "GET":
-      const result = await getUserProfile(userId as string, normalizeRelays());
+      const result = await getUserRelays(userId as string, normalizeRelays());
 
       if (typeof result === "string") {
         console.error(result);
@@ -26,9 +35,7 @@ export default async function handler(
       } else if (result === null) {
         res.status(404).end();
       } else {
-        // TODO: remove this after finished debugging deployment
-        console.log(result);
-        res.status(200).json(result);
+        res.status(200).json(formatResult(result));
       }
       break;
     default:
