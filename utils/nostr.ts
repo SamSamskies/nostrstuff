@@ -60,6 +60,15 @@ export const getUserProfile = (
     kinds: [0],
   });
 
+export const getUserRelays = (
+  userId: string,
+  relays: string[] = DEFAULT_RELAYS
+) =>
+  findOneFromRelays(Array.from(new Set(DEFAULT_RELAYS.concat(relays))), {
+    authors: [normalizeId(userId)],
+    kinds: [3],
+  });
+
 export const findEvent = (relays: string[], eventId: string) =>
   findOneFromRelays(relays, {
     ids: [normalizeId(eventId)],
