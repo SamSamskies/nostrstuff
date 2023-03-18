@@ -51,6 +51,26 @@ const findOneFromRelays = async (relays: string[], filter: Filter) => {
   }
 };
 
+const findFromRelays = async (relays: string[], filters: Filter[]) => {
+  let pool;
+
+  try {
+    pool = new SimplePool();
+
+    return await pool.list(relays, filters);
+  } catch (error) {
+    return error instanceof Error ? error.message : "Something went wrong :(";
+  } finally {
+    if (pool) {
+      try {
+        pool.close();
+      } catch {
+        // fail silently for errors that happen when closing the pool
+      }
+    }
+  }
+};
+
 export const getUserProfile = (
   userId: string,
   relays: string[] = DEFAULT_RELAYS
@@ -68,6 +88,19 @@ export const getUserRelays = (
     authors: [normalizeId(userId)],
     kinds: [3],
   });
+
+export const getUserNoosts = (
+  userId: string,
+  relays: string[] = DEFAULT_RELAYS,
+  limit: number = 10
+) =>
+  findFromRelays(Array.from(new Set(DEFAULT_RELAYS.concat(relays))), [
+    {
+      authors: [normalizeId(userId)],
+      kinds: [1],
+      limit,
+    },
+  ]);
 
 export const findEvent = (relays: string[], eventId: string) =>
   findOneFromRelays(relays, {
