@@ -16,7 +16,13 @@ export default async function handler(
     );
   };
   const formatResult = (result: any) => {
-    const relayData = JSON.parse(result.content);
+    let relayData: { [key: string]: { read: boolean; write: boolean } };
+
+    try {
+      relayData = JSON.parse(result.content);
+    } catch {
+      return null;
+    }
 
     return Object.keys(relayData).map((key) => ({
       relay: key,
