@@ -3,13 +3,17 @@ import { encodeNpub } from "@/utils/nostr";
 export const makeSnortUrl = (prefix: "npub" | "note", hexId: string) => {
   const baseUrl = "https://snort.social";
 
-  switch (prefix) {
-    case "npub":
-      return `${baseUrl}/p/${encodeNpub(hexId)}`;
-    case "note":
-      return `${baseUrl}/e/${encodeNpub(hexId)}`;
-    default:
-      return null;
+  try {
+    switch (prefix) {
+      case "npub":
+        return `${baseUrl}/p/${encodeNpub(hexId)}`;
+      case "note":
+        return `${baseUrl}/e/${encodeNpub(hexId)}`;
+      default:
+        return null;
+    }
+  } catch {
+    return null;
   }
 };
 
