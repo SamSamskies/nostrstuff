@@ -40,13 +40,17 @@ export const HelpMenu = () => {
         npub1vp8fdcyejd4pqjyrjk9sgz68vuhq7pyvnzk8j0ehlljvwgp8n6eqsrnpsw
         wss://nostr.fmt.wiz.biz,wss://relay.snort.social
       </HelpMenuItem>
-      <HelpMenuItem command="convert <SIMPLE_BECH_32_VALUE>">
+      <HelpMenuItem command="convert <SIMPLE_BECH32_VALUE>">
         Converts a simple bech32 value such as your pubkey in npub format to
         hex.
       </HelpMenuItem>
       <HelpMenuItem command="encode <npub | note> <HEX_VALUE>">
         Encodes a hex value in bech32 format with either a prefix of npub or
         note.
+      </HelpMenuItem>
+      <HelpMenuItem command="extract <NEVENT_BECH32_VALUE>">
+        Extracts the note ID, relays (if available), and author npub (if
+        available) from an nevent bech32 value.
       </HelpMenuItem>
       <HelpMenuItem command="wtf">
         Type this if you are confused af.
