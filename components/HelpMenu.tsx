@@ -50,7 +50,7 @@ export const HelpMenu = () => {
       </HelpMenuItem>
       <HelpMenuItem command="extract <NEVENT_BECH32_VALUE>">
         Extracts the note ID, relays (if available), and author npub (if
-        available).
+        available) from an nevent bech32 value.
       </HelpMenuItem>
       <HelpMenuItem command="wtf">
         Type this if you are confused af.
