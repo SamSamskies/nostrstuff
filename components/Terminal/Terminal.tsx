@@ -1,5 +1,12 @@
 import { HelpMenu, RelayInfo, WelcomeMessage, WhoIs } from "@/components";
-import { convertToHex, encodeNip19, findEvent, queryNip05 } from "@/utils";
+import {
+  convertToHex,
+  decodeNip19,
+  encodeNip19,
+  encodeNpub,
+  findEvent,
+  queryNip05,
+} from "@/utils";
 import { ReactTerminal } from "react-terminal";
 import { ExternalLink } from "@/components/ExternalLink";
 import { makeUrlWithParams } from "@/utils";
@@ -148,6 +155,31 @@ export const Terminal = () => {
 
       try {
         return <p>{encodeNip19(prefix, hexId)}</p>;
+      } catch (error) {
+        return error instanceof Error
+          ? error.message
+          : "Something went wrong :(";
+      }
+    },
+
+    extract: (input: string) => {
+      const normalizedInput = input.trim();
+
+      try {
+        const { type, data } = decodeNip19(normalizedInput);
+        const { id, relays, author } = data;
+
+        if (type !== "nevent") {
+          return `${normalizedInput} is not a valid nevent value.`;
+        }
+
+        return (
+          <>
+            <p>Note ID: {encodeNip19("note", id)}</p>
+            {relays.length > 0 && <p>Relays: {relays.join(", ")}</p>}
+            {author && <p>Author npub: {encodeNpub(author)}</p>}
+          </>
+        );
       } catch (error) {
         return error instanceof Error
           ? error.message

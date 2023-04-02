@@ -120,6 +120,8 @@ export const encodeNip19 = (prefix: "npub" | "note", hexId: string) => {
   }
 };
 
+export const decodeNip19 = nip19.decode;
+
 export const makeNostrUri = (prefix: "npub" | "note", hexId: string) => {
   const addNostrPrefix = (nip19Id: string) => `nostr:${nip19Id}`;
 
