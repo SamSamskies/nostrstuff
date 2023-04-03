@@ -75,10 +75,13 @@ export const getUserProfile = (
   userId: string,
   relays: string[] = DEFAULT_RELAYS
 ) =>
-  findOneFromRelays(Array.from(new Set(DEFAULT_RELAYS.concat(relays))), {
-    authors: [normalizeId(userId)],
-    kinds: [0],
-  });
+  findOneFromRelays(
+    Array.from(new Set([...DEFAULT_RELAYS, ...relays, "wss://purplepag.es"])),
+    {
+      authors: [normalizeId(userId)],
+      kinds: [0],
+    }
+  );
 
 export const getUserRelays = (
   userId: string,
