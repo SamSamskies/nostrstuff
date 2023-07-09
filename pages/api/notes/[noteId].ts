@@ -14,13 +14,13 @@ export default async function handler(
   try {
     decodedNoteId = decodeNip19(noteId);
   } catch (error) {
-    res.status(400).end(badNoteIdMessage);
+    return res.status(400).end(badNoteIdMessage);
   }
 
   const { type, data } = decodedNoteId;
 
   if (type !== "note" && type !== "nevent") {
-    res.status(400).end(badNoteIdMessage);
+    return res.status(400).end(badNoteIdMessage);
   }
 
   const relays =
