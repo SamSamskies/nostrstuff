@@ -137,3 +137,15 @@ export const makeNostrUri = (prefix: "npub" | "note", hexId: string) => {
       return null;
   }
 };
+
+export const publishEvent = async (relays: string[], event: Event) => {
+  let pool;
+
+  try {
+    pool = new SimplePool();
+
+    return await pool.publish(relays, event);
+  } catch (error) {
+    return error instanceof Error ? error.message : "Something went wrong :(";
+  }
+};
