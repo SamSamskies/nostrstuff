@@ -17,7 +17,7 @@ export default function Broadcast() {
       const pub = await publishEvent([relay], event);
 
       pub.on("ok", () => {
-        setSuccess(`${relay} has accepted our event`);
+        setSuccess(`${relay} has accepted your event`);
       });
       pub.on("failed", (reason: string) => {
         setError(`failed to publish to ${relay}: ${reason}`);
