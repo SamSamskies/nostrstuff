@@ -26,7 +26,7 @@ export const WelcomeMessage = () => {
       <p>Type &quot;help&quot; for all available commands.</p>
       <div>
         Example commands:
-        <ExampleCommand>ri eden.nostr.land</ExampleCommand>
+        <ExampleCommand>ri relay.nostr.band</ExampleCommand>
         <ExampleCommand>whois samsamskies@nostrstuff.com</ExampleCommand>
       </div>
       {isMobile && (
