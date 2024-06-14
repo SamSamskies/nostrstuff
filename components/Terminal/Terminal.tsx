@@ -13,7 +13,7 @@ import { makeUrlWithParams } from "@/utils";
 import useLocalStorage from "use-local-storage";
 import { THEMES } from "@/constants";
 import { GitHubRepoLink } from "@/components/Terminal/GitHubRepoLink";
-import { SnortLink } from "@/components/SnortLink";
+import { NjumpLink } from "@/components/NjumpLink";
 import { NostrUriLink } from "@/components/NostrUriLink";
 
 export const Terminal = () => {
@@ -73,9 +73,9 @@ export const Terminal = () => {
         <>
           <p>{`Found it!`}</p>
           <pre>{JSON.stringify(result, null, 2)}</pre>
-          {result.kind === 1 && <SnortLink kind={1} hexId={result.id} />}
+          {result.kind === 1 && <NjumpLink kind={1} hexId={result.id} />}
           {result.kind === 1 && <NostrUriLink kind={1} hexId={result.id} />}
-          <SnortLink kind={0} hexId={result.pubkey} />
+          <NjumpLink kind={0} hexId={result.pubkey} />
           <NostrUriLink kind={0} hexId={result.pubkey} />
         </>
       );

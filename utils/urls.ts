@@ -1,17 +1,12 @@
-import { encodeNpub } from "@/utils/nostr";
+import { encodeNip19, encodeNpub } from "@/utils/nostr";
 
-export const makeSnortUrl = (prefix: "npub" | "note", hexId: string) => {
-  const baseUrl = "https://snort.social";
+export const makeNjumpUrl = (prefix: "npub" | "note", hexId: string) => {
+  const baseUrl = "https://njump.me";
 
   try {
-    switch (prefix) {
-      case "npub":
-        return `${baseUrl}/p/${encodeNpub(hexId)}`;
-      case "note":
-        return `${baseUrl}/e/${encodeNpub(hexId)}`;
-      default:
-        return null;
-    }
+    return ["npub", "note"].includes(prefix)
+      ? `${baseUrl}/${encodeNip19(prefix, hexId)}`
+      : null;
   } catch {
     return null;
   }
