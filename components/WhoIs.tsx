@@ -1,12 +1,12 @@
 import { Nip05QueryResult } from "@/utils";
-import { SnortLink } from "@/components/SnortLink";
+import { NjumpLink } from "@/components/NjumpLink";
 import { Fragment } from "react";
 import { NostrUriLink } from "@/components/NostrUriLink";
 
 export const WhoIs = ({ pubkey, relays }: Nip05QueryResult) => {
   return (
     <>
-      <SnortLink kind={0} hexId={pubkey} />
+      <NjumpLink kind={0} hexId={pubkey} />
       <NostrUriLink kind={0} hexId={pubkey} />
       {Number(relays?.length) > 0 && (
         <p>
