@@ -83,7 +83,7 @@ export const getUserProfile = (
     }
   );
 
-export const getMultipleUserProfile = (
+export const getMultipleUserProfiles = (
   userIds: string[],
   relays: string[] = DEFAULT_RELAYS
 ) =>

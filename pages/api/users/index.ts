@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getMultipleUserProfile } from "@/utils";
+import { getMultipleUserProfiles } from "@/utils";
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,7 +31,7 @@ export default async function handler(
         return res.status(404).end();
       }
 
-      const result = await getMultipleUserProfile(userIds, normalizeRelays());
+      const result = await getMultipleUserProfiles(userIds, normalizeRelays());
 
       if (typeof result === "string") {
         console.error(result);
