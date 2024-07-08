@@ -83,6 +83,20 @@ export const getUserProfile = (
     }
   );
 
+export const getMultipleUserProfiles = (
+  userIds: string[],
+  relays: string[] = DEFAULT_RELAYS
+) =>
+  findFromRelays(
+    Array.from(new Set([...DEFAULT_RELAYS, ...relays, "wss://purplepag.es"])),
+    [
+      {
+        authors: userIds.map(normalizeId),
+        kinds: [0],
+      },
+    ]
+  );
+
 export const getUserRelays = (
   userId: string,
   relays: string[] = DEFAULT_RELAYS
