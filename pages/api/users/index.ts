@@ -1,37 +1,66 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getMultipleUserProfiles } from "@/utils";
+import { decodeNip19, getMultipleUserProfiles } from "@/utils";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { userId, relays } = req.query;
-  const normalizeUserIds = () => {
+  const normalizeUserIds = (userId?: string | string[]) => {
     if (!userId) {
-      return;
+      return [];
     }
 
     return Array.isArray(userId) ? userId : [userId];
   };
-  const normalizeRelays = () => {
+  const normalizeRelays = (relays?: string | string[]) => {
     if (!relays) {
-      return;
+      return [];
     }
 
     return (Array.isArray(relays) ? relays : relays.split(",")).map(
       decodeURIComponent
     );
   };
+  const normalizeUserIdsAndRelays = (userIds: string[], relays: string[]) => {
+    const relaySet = new Set(relays);
+    const data = userIds.map((userId) => {
+      if (userId.startsWith("nprofile")) {
+        const { data } = decodeNip19(userId);
+
+        return {
+          userId: data.pubkey,
+          relays: data.relays,
+        };
+      }
+
+      return { userId, relays: null };
+    });
+
+    data.forEach(({ relays }) => {
+      if (relays) {
+        relays.forEach((r: string) => relaySet.add(r));
+      }
+    });
+
+    return {
+      userIds: data.map(({ userId }) => userId),
+      relays: Array.from(relaySet),
+    };
+  };
 
   switch (req.method) {
     case "GET":
-      const userIds = normalizeUserIds();
+      let result = null;
 
-      if (!userIds) {
-        return res.status(404).end();
+      try {
+        const { userIds, relays } = normalizeUserIdsAndRelays(
+          normalizeUserIds(req.query.userId),
+          normalizeRelays(req.query.relays)
+        );
+        result = await getMultipleUserProfiles(userIds, relays);
+      } catch (err) {
+        result = err instanceof Error ? err.message : "Something went wrong :(";
       }
-
-      const result = await getMultipleUserProfiles(userIds, normalizeRelays());
 
       if (typeof result === "string") {
         console.error(result);
