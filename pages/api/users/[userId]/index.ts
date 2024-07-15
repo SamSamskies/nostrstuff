@@ -1,24 +1,54 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUserProfile } from "@/utils";
+import { getUserProfile, decodeNip19 } from "@/utils";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { userId, relays } = req.query;
-  const normalizeRelays = () => {
+  const normalizeRelays = (relays?: string | string[]) => {
     if (!relays) {
-      return;
+      return [];
     }
 
     return (Array.isArray(relays) ? relays : relays.split(",")).map(
       decodeURIComponent
     );
   };
+  const normalizeUserIdAndRelays = (
+    userId?: string | string[],
+    relays?: string | string[]
+  ) => {
+    if (!userId || Array.isArray(userId)) {
+      throw new Error("There must be one and only one userId.");
+    }
+
+    const normalizedRelays = normalizeRelays(relays);
+
+    if (userId.startsWith("nprofile")) {
+      const { data } = decodeNip19(userId);
+
+      return {
+        userId: data.pubkey,
+        relays: [...data.relays, ...normalizedRelays],
+      };
+    }
+
+    return { userId, relays: normalizedRelays };
+  };
 
   switch (req.method) {
     case "GET":
-      const result = await getUserProfile(userId as string, normalizeRelays());
+      let result = null;
+
+      try {
+        const { userId, relays } = normalizeUserIdAndRelays(
+          req.query.userId,
+          req.query.relays
+        );
+        result = await getUserProfile(userId, relays);
+      } catch (err) {
+        result = err instanceof Error ? err.message : "Something went wrong :(";
+      }
 
       if (typeof result === "string") {
         console.error(result);
