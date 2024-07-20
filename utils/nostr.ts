@@ -97,7 +97,7 @@ export const getMultipleUserProfiles = (
     ]
   );
 
-export const getUserRelays = (
+export const getContactList = (
   userId: string,
   relays: string[] = DEFAULT_RELAYS
 ) =>
