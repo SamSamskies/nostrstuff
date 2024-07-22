@@ -1,6 +1,7 @@
 import { bech32 } from "bech32";
 import "websocket-polyfill";
 import { DEFAULT_RELAYS } from "@/constants";
+import { chunkArray } from "@/utils";
 
 const { nip05, nip19, SimplePool } = require("nostr-tools");
 
@@ -17,6 +18,16 @@ type Filter = {
 export interface Nip05QueryResult {
   pubkey: string;
   relays?: string[];
+}
+
+export interface Event {
+  kind: number;
+  tags: string[][];
+  content: string;
+  created_at: number;
+  pubkey: string;
+  id: string;
+  sig: string;
 }
 
 export const queryNip05 = nip05.queryProfile;
@@ -83,21 +94,28 @@ export const getUserProfile = (
     }
   );
 
-export const getMultipleUserProfiles = (
+export const getMultipleUserProfiles = async (
   userIds: string[],
   relays: string[] = DEFAULT_RELAYS
-) =>
-  findFromRelays(
-    Array.from(new Set([...DEFAULT_RELAYS, ...relays, "wss://purplepag.es"])),
-    [
-      {
-        authors: userIds.map(normalizeId),
-        kinds: [0],
-      },
-    ]
-  );
+) => {
+  const dedupedAuthors = Array.from(new Set(userIds.map(normalizeId)));
+  const eventPromises = chunkArray(dedupedAuthors, 256).map((authorsChunk) => {
+    return findFromRelays(
+      Array.from(new Set([...DEFAULT_RELAYS, ...relays, "wss://purplepag.es"])),
+      [
+        {
+          authors: authorsChunk,
+          kinds: [0],
+        },
+      ]
+    );
+  });
+  const results = await Promise.all(eventPromises);
 
-export const getContactList = (
+  return results.flat();
+};
+
+export const getFollowList = (
   userId: string,
   relays: string[] = DEFAULT_RELAYS
 ) =>
