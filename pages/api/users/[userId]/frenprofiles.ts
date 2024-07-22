@@ -53,11 +53,15 @@ export default async function handler(
           req.query.relays
         );
         const followListEvent = await getFollowList(userId, relays);
-
-        result = await getMultipleUserProfiles(
+        const profileEvents = await getMultipleUserProfiles(
           extractFollowPubkeys(followListEvent),
           relays
         );
+
+        result =
+          req.query.onlyContent === "1"
+            ? profileEvents.map(({ content }) => JSON.parse(content))
+            : profileEvents;
       } catch (err) {
         result = err instanceof Error ? err.message : "Something went wrong :(";
       }
