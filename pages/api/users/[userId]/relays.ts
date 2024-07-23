@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUserRelays } from "@/utils";
+import { getFollowList } from "@/utils";
 
 export default async function handler(
   req: NextApiRequest,
@@ -33,7 +33,7 @@ export default async function handler(
 
   switch (req.method) {
     case "GET":
-      const result = await getUserRelays(userId as string, normalizeRelays());
+      const result = await getFollowList(userId as string, normalizeRelays());
 
       if (typeof result === "string") {
         console.error(result);
