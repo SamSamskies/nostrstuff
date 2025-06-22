@@ -198,7 +198,7 @@ export const Terminal = () => {
       try {
         const url = makeUrlWithParams("https://lnurlpay.com/api/invoice", {
           amount: normalizedAmount.toString(),
-          lnUrlOrAddress: "samsamskies@strike.army",
+          lnUrlOrAddress: "samsamskies@strike.me",
           comment: comment
             ? comment.trim().replace(/^["']|["']$/g, "")
             : "nostrstuff donation",
