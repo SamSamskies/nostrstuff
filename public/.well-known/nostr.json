@@ -1,16 +1,11 @@
 {
   "names": {
-    "_": "604e96e099936a104883958b040b47672e0f048c98ac793f37ffe4c720279eb2",
-    "samsamskies": "604e96e099936a104883958b040b47672e0f048c98ac793f37ffe4c720279eb2"
+    "_": "604e96e099936a104883958b040b47672e0f048c98ac793f37ffe4c720279eb2"
   },
   "relays": {
     "604e96e099936a104883958b040b47672e0f048c98ac793f37ffe4c720279eb2": [
       "wss://relay.damus.io",
-      "wss://eden.nostr.land",
-      "wss://nostr.fmt.wiz.biz",
-      "wss://nostr.milou.lol",
-      "wss://relay.snort.social",
-      "wss://relay.nostr.info",
+      "wss://relay.nostr.band",
       "wss://nostr.wine"
     ]
   }
