@@ -11,6 +11,6 @@ export const THEMES = [
 export const DEFAULT_RELAYS = [
   "wss://relay.damus.io",
   "wss://nostr.wine",
-  "wss://relay.nostr.band",
+  "wss://relay.primal.net",
   "wss://nos.lol",
 ];
